@@ -5,6 +5,7 @@
 //
 clear all 
 set more off
+cd "~/GitHub/Under_the_carpet"
 
 //----------------------------------------------------------------------------//
 // INSTITUTIONAL SECTOR ACCOUNTS (UN-DATA: http://data.un.org/)
@@ -32,7 +33,7 @@ local item_FISIM "Less: Financial intermediation services indirectly measured (o
 
 //I. RETRIEVE DATA OF DIFFERENT INSTITUTIONAL SECTORS ------------------------//
 foreach i in `i_sector' {
-	import delimited "~/Dropbox/Under_the_carpet/Data/UN/UNdata_`i'.csv" , encoding(ISO-8859-1) clear
+	import delimited "Data/UN/UNdata_`i'.csv" , encoding(ISO-8859-1) clear
 	local space " - "
 	if ("`i'"=="SF" | "`i'"=="SnF" | "`i'"=="SFSnF"){
 		local space "  -  "
@@ -163,7 +164,7 @@ tempfile save1st
 save `save1st', replace
 
 //Compare with Piketty & Zucman 
-import excel "~/Dropbox/Under_the_carpet/Data/PZ_Kshares.xlsx", ///
+import excel "Data/PZ_Kshares.xlsx", ///
 	sheet("Hoja1") firstrow clear	
 
 reshape long K_PZ_ Ki_PZ_ , i(year) j(country) string
@@ -195,7 +196,7 @@ graph twoway (line K_PZ_ K_n year) if series==1000 & iso2!="AU", by(iso2) ///
 	ylabel(0(10)30, labsize(medium) angle(horizontal) format(%2.0f) grid labels) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray)) ///
 	legend(label(1 "Piketty and Zucman (2014)") label(2 "Own estimates"))
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/KperCtry(PZ).pdf", replace 
+quietly graph export "figures_apdx/KperCtry(PZ).pdf", replace 
 
 // III. PHI: BALANCED PANEL ----------------------------------------------------// 
 
@@ -248,7 +249,7 @@ xtdescribe
 //Get Exchange rates
 quietly levelsof iso2, local(ctries)
 quietly levelsof year, local(yrs)
-import delimited "~/Dropbox/Under_the_carpet/Data/UN/UNdata_xrates.csv" ///
+import delimited "Data/UN/UNdata_xrates.csv" ///
 	, encoding(ISO-8859-1)clear
 quietly replace countryorarea = subinstr(countryorarea, ", People's Republic of", "",.) 
 quietly replace countryorarea = subinstr(countryorarea, "Former ", "",.) 
@@ -326,7 +327,7 @@ graph twoway (line phi_hh year, lcolor(edkblue)) ///
 	yline(0, lcolor(black) lpattern(dot)) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/AllPhis_BpanelG.pdf", replace
+graph export "figures_apdx/AllPhis_BpanelG.pdf", replace
 
 //Graph (w/o G, GROSS)
 graph twoway (line phi_hh2 year, lcolor(edkblue)) ///
@@ -336,7 +337,7 @@ graph twoway (line phi_hh2 year, lcolor(edkblue)) ///
 	ylabel(20(20)80, labsize(small) angle(horizontal) grid labels) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/AllPhis_BpanelnoG.pdf", replace
+graph export "figures_apdx/AllPhis_BpanelnoG.pdf", replace
 
 // III. b) AGGREGATE PICTURE (GROSS)-------------------------------------------//
 
@@ -360,7 +361,7 @@ preserve
 			ylabel(10(10)55, labsize(medium) angle(horizontal) grid labels) ///
 			graphregion(color(white)) scale(1.2) legend(label(1 "Gross") label(2 "Net"))  ///
 			scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KKnetByCtry_BP.pdf", replace
+			quietly graph export "figures/KKnetByCtry_BP.pdf", replace
 
 		quietly collapse (sum) NI_g NI_n ///
 			LI KI_n, by (year)
@@ -376,7 +377,7 @@ preserve
 			text(37 2013  "Gross", color(edkblue)) ///
 			text(23 2013  "Net", color(maroon)) ///
 			graphregion(color(white)) scale(1.2) legend(off)
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KKnet_BP.pdf", replace	
+			quietly graph export "figures/KKnet_BP.pdf", replace	
 restore
 
 //Collapse
@@ -416,7 +417,7 @@ graph twoway (line phi_hh year, lcolor(edkblue)) ///
 	text(40 2005  "Private Corporations", color(maroon)) ///
 	text(8 2005  "Public Sector", color(sand)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/Phis.pdf", replace
+graph export "figures/Phis.pdf", replace
 
 //Graph (without G, GROSS)
 graph twoway (line phi_hh2 year, lcolor(edkblue)) ///
@@ -430,7 +431,7 @@ graph twoway (line phi_hh2 year, lcolor(edkblue)) ///
 	text(55 2006  "Household Sector", color(edkblue)) ///
 	text(45 2006  "Private Corporations", color(maroon)) ///
 	legend(off) scale(1.2)
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/Phi_wo_G.pdf", replace
+	graph export "figures/Phi_wo_G.pdf", replace
 
 //Average (with G, GROSS)
 graph twoway (line avgphi_g_hh year, lcolor(edkblue)) ///
@@ -445,7 +446,7 @@ graph twoway (line avgphi_g_hh year, lcolor(edkblue)) ///
 	text(58 2005  "Private Corporations", color(maroon)) ///
 	text(12 2005  "Public Sector", color(sand)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/AvgPhisgross.pdf", replace
+graph export "figures/AvgPhisgross.pdf", replace
 
 //Average (without G, GROSS) 
 graph twoway (line avgphi_g_hh2_NG year, lcolor(edkblue)) ///
@@ -458,7 +459,7 @@ graph twoway (line avgphi_g_hh2_NG year, lcolor(edkblue)) ///
 	text(48 2005  "Household Sector", color(edkblue)) ///
 	text(53 2005  "Private Corporations", color(maroon)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/AvgPhisgrossNotG.pdf", replace
+graph export "figures/AvgPhisgrossNotG.pdf", replace
 
 //Save info
 quietly levelsof year, local(years)
@@ -501,7 +502,7 @@ graph twoway (line OS_g_G_ratio year) (line NPI_G_ratio year) (line phi_g_G year
 	 yline(0, lcolor(black) lpattern(dot)) graphregion(color(white)) ///
 	plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/Phis_G_comp.pdf", replace	
+	graph export "figures_apdx/Phis_G_comp.pdf", replace	
 
 //Analyze structure 
 use `randomname2', clear
@@ -509,7 +510,7 @@ quietly gen KI_share=.
 foreach y in `years' {
 	replace KI_share=KI/scal_KItot_`y'*100 if year==`y'
 }
-//graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/Strucutre.pdf", replace
+//graph export "figures_apdx/Strucutre.pdf", replace
 
 //On average  
 quietly collapse (mean) KI_share, by(countryorarea)
@@ -540,7 +541,7 @@ graph twoway (line phi_hh_n year, lcolor(edkblue)) ///
 	yline(0, lcolor(black) lpattern(dot)) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/AllNetPhis_BpanelG.pdf", replace
+graph export "figures_apdx/AllNetPhis_BpanelG.pdf", replace
 
 //Graph (w/o G, NET)
 graph twoway (line phi_hh2_n year, lcolor(edkblue)) ///
@@ -551,7 +552,7 @@ graph twoway (line phi_hh2_n year, lcolor(edkblue)) ///
 	ylabel(0(20)100, labsize(small) angle(horizontal) grid labels) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/AllNetPhis_BpanelnoG.pdf", replace
+graph export "figures_apdx/AllNetPhis_BpanelnoG.pdf", replace
  
 quietly collapse (sum) KI_hh_n KI_corp_n KI_G_n KI_SFL_n KI_net ///
 	(mean) avgphi_g_HH_notG=phi_hh2 avgphi_g_corp_notG=phi_corp2 ///
@@ -585,7 +586,7 @@ graph twoway (line phi_hh_n year, lcolor(edkblue)) ///
 	text(46 2005  "Private Corporations", color(maroon)) ///
 	text(-5 2005  "Public Sector", color(sand)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/NetPhis.pdf", replace
+graph export "figures/NetPhis.pdf", replace
 
 //Graph (without G, NET)
 graph twoway (line phi_hh2_n year, lcolor(edkblue)) ///
@@ -599,7 +600,7 @@ graph twoway (line phi_hh2_n year, lcolor(edkblue)) ///
 	text(60 2013  "Household Sector", color(edkblue)) ///
 	text(40 2013  "Private Corporations", color(maroon)) ///
 	legend(off) scale(1.2)
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/NetPhi_wo_G.pdf", replace
+	graph export "figures/NetPhi_wo_G.pdf", replace
 	
 //Average (with G, NET)
 graph twoway (line avgphi_n_hh year, lcolor(edkblue)) ///
@@ -614,7 +615,7 @@ graph twoway (line avgphi_n_hh year, lcolor(edkblue)) ///
 	text(33 2005  "Private Corporations", color(maroon)) ///
 	text(5 2005  "Public Sector", color(sand)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/AvgPhisNetG.pdf", replace
+graph export "figures/AvgPhisNetG.pdf", replace
 
 //Average (without G, NET)
 graph twoway (line avgphi_n_hh2_NG year, lcolor(edkblue)) ///
@@ -627,7 +628,7 @@ graph twoway (line avgphi_n_hh2_NG year, lcolor(edkblue)) ///
 	text(53 2012  "Household Sector", color(edkblue)) ///
 	text(47 2012  "Private Corporations", color(maroon)) ///
 	graphregion(color(white)) scale(1.2) legend(off)
-graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/AvgPhisNetNotG.pdf", replace	
+graph export "figures/AvgPhisNetNotG.pdf", replace	
 	
 //IV. LONG RUN SERIES --------------------------------------------------------//
 
@@ -708,7 +709,7 @@ graph twoway (line `v' year if country_series=="JP100", lcolor(edkblue)) ///
 	legend(off) ytitle("Household share of Capital Income (%)") xtitle("") ///
 	text(53 1975  "Japan ('100' series)", color(edkblue)) ///
 	text(32 1990  "Japan ('300' series)", color(ltblue)) scale(`scalen') 
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LR_JP_`fname'.pdf", replace
+	graph export "figures/LR_JP_`fname'.pdf", replace
 	
 //SCANDINAVIAN
 graph twoway (line `v' year if country_series=="FI500", lcolor(edkblue)) ///
@@ -719,7 +720,7 @@ graph twoway (line `v' year if country_series=="FI500", lcolor(edkblue)) ///
 	legend(off) text(43 1970  "Finland", color(edkblue)) ///
 	text(28 1970  "Norway", color(maroon)) ///
 	ytitle("Household share of Capital Income (%)") xtitle("") scale(`scalen')
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LR_Scandi_`fname'.pdf", replace
+	graph export "figures/LR_Scandi_`fname'.pdf", replace
 
 //ENGLISH SPEAKING
 graph twoway (line `v' year if country_series=="US100", lcolor(edkblue)) ///
@@ -733,7 +734,7 @@ graph twoway (line `v' year if country_series=="US100", lcolor(edkblue)) ///
 	text(44 2008  "Australia", color(maroon)) ///
 	text(28 2008  "Canada", color(sand)) ///
 	ytitle("Household share of Capital Income (%)") xtitle("") scale(`scalen')
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LR_Eng_`fname'.pdf", replace
+	graph export "figures/LR_Eng_`fname'.pdf", replace
 	
 //OTHER EURO 
 graph twoway (line `v' year if country_series=="IT200", lcolor(edkblue)) ///
@@ -748,7 +749,7 @@ graph twoway (line `v' year if country_series=="IT200", lcolor(edkblue)) ///
 	text(62 1972 "France", color(maroon)) ///
 	text(35 1972 "Netherlands", color(forest_green)) ///
 	ytitle("Household share of Capital Income (%)") xtitle("")	scale(`scalen')
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LR_EUR_`fname'.pdf", replace
+	graph export "figures/LR_EUR_`fname'.pdf", replace
 }
 
 // b) NET ---------------------------------------------------------------------//
@@ -778,7 +779,7 @@ graph twoway (line `v' year if country_series=="JP100", lcolor(edkblue)) ///
 	legend(off) ytitle("Household share of Capital Income (%)") xtitle("") ///
 	text(60 1975  "Japan ('100' series)", color(edkblue)) ///
 	text(35 2004  "Japan ('300' series)", color(ltblue)) scale(`scalen') 
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LRnet_JP_`fname'.pdf", replace
+	graph export "figures/LRnet_JP_`fname'.pdf", replace
 	
 //SCANDINAVIAN
 graph twoway (connected `v' year if country_series=="FI500", lcolor(edkblue) msize(small) mfcolor(white)) ///
@@ -790,7 +791,7 @@ graph twoway (connected `v' year if country_series=="FI500", lcolor(edkblue) msi
 	legend(off) text(60 1970  "Finland", color(edkblue)) ///
 	text(28 1970  "Norway", color(maroon)) ///
 	ytitle("Household share of Capital Income (%)") xtitle("") scale(`scalen')
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LRnet_Scandi_`fname'.pdf", replace
+	graph export "figures/LRnet_Scandi_`fname'.pdf", replace
 	
 //OTHER EURO 
 graph twoway (line `v' year if country_series=="IT200", lcolor(edkblue)) ///
@@ -806,7 +807,7 @@ graph twoway (line `v' year if country_series=="IT200", lcolor(edkblue)) ///
 	text(80 1972 "France", color(maroon)) ///
 	text(35 1998 "Netherlands", color(forest_green)) ///
 	ytitle("Household share of Capital Income (%)") xtitle("")	scale(`scalen')
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/LRnet_EUR_`fname'.pdf", replace
+	graph export "figures/LRnet_EUR_`fname'.pdf", replace
 }
 
 //V. PHI: UNBALANCED PANEL ----------------------------------------------------//
@@ -848,7 +849,7 @@ graph twoway (line phi_g_HH year if country_series=="US100", lcolor(edkblue)) //
 	ytitle("Household share of Capital Income (%)") xtitle("") ///
 	graphregion(color(white)) legend(label(1 "US SNA94") ///
 	label(2 "US SNA08") label(3 "Balanced Panel (20 Countries)"))
-	graph export "~/Dropbox/Under_the_carpet/Figures/Phi/US1995-2015_G.pdf", replace
+	graph export "figures_apdx/US1995-2015_G.pdf", replace
 	
 	graph twoway (line phi_g_hh year if country_series=="US100", lcolor(ltblue)) ///
 	(line phi_g_hh year if country_series=="US1000", lcolor(edkblue)) ///
@@ -860,7 +861,7 @@ graph twoway (line phi_g_HH year if country_series=="US100", lcolor(edkblue)) //
 	ytitle("Household share of Capital Income (%)") xtitle("") ///
 	graphregion(color(white)) legend(label(1 "US SNA94") ///
 	label(2 "US SNA08") label(3 "Balanced Panel (20 Countries)"))
-	graph export "~/Dropbox/Under_the_carpet/Figures/Phi/US1995-2015_noG.pdf", replace
+	graph export "figures_apdx/US1995-2015_noG.pdf", replace
 	
 //K trends
 //xtline K if GEO=="South America" | GEO=="Central America"
@@ -902,7 +903,7 @@ graph twoway (line phi_g_HH year, lcolor(edkblue)) ///
 	//text(58 2005  "Household Sector", color(edkblue)) ///
 	//text(40 2005  "Private Corporations", color(maroon)) ///
 	//text(8 2005  "Public Sector", color(sand)) ///
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/Phis_oth.pdf", replace
+	graph export "figures/Phis_oth.pdf", replace
 	
 graph twoway (line phi_n_HH year, lcolor(edkblue)) ///
 	(line phi_n_corp year, lcolor(maroon)) ///
@@ -916,7 +917,7 @@ graph twoway (line phi_n_HH year, lcolor(edkblue)) ///
 	//text(58 2005  "Household Sector", color(edkblue)) ///
 	//text(40 2005  "Private Corporations", color(maroon)) ///
 	//text(8 2005  "Public Sector", color(sand)) ///
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/NetPhis_oth.pdf", replace
+	graph export "figures/NetPhis_oth.pdf", replace
 	
 graph twoway (line phi_n_hh year, lcolor(edkblue)) ///
 	(line phi_n_cp year, lcolor(maroon)) ///
@@ -929,7 +930,7 @@ graph twoway (line phi_n_hh year, lcolor(edkblue)) ///
 	//text(58 2005  "Household Sector", color(edkblue)) ///
 	//text(40 2005  "Private Corporations", color(maroon)) ///
 	//text(8 2005  "Public Sector", color(sand)) ///
-	graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/NetPhis_oth.pdf", replace	
+	graph export "figures/NetPhis_oth.pdf", replace	
 
 //Reshape data
 quietly collapse (first) phi_1st_notG=phi_g_hh phi_1st_G=phi_g_HH ///
@@ -955,7 +956,7 @@ graph twoway (scatter phi_last_notG phi_1st_notG if timegroup1995==1995 & phi_1s
 	, ytitle("Last Observation (%)") xtitle("First Observation (%)") ylabel(20(20)80, angle(horizontal)) ///
 	xlabel(20(20)80, grid labels)  graphregion(color(white)) legend(off) ///
 	//title("Evolution of the Household Share of Capital Income, Excluding Public Income 1995-2015")
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/Unbalanced1995-2015_notG.pdf", replace
+quietly graph export "figures_apdx/Unbalanced1995-2015_notG.pdf", replace
 
 //With G (GROSS)
 graph twoway (scatter phi_last_G phi_1st_G if timegroup1995==1995 & phi_1st_G>phi_last_G ///
@@ -968,7 +969,7 @@ graph twoway (scatter phi_last_G phi_1st_G if timegroup1995==1995 & phi_1st_G>ph
 	, ytitle("Last Observation (%)") xtitle("First Observation (%)") ylabel(20(20)80, angle(horizontal)) ///
 	xlabel(20(20)80, grid labels)  graphregion(color(white)) legend(off)
 	//title("Evolution of the Household Share of Capital Income, Excluding Public Income 1995-2015")
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/Unbalanced1995-2015_G.pdf", replace
+quietly graph export "figures/Unbalanced1995-2015_G.pdf", replace
 
 //w/o G (NET)
 graph twoway (scatter phinet_last_notG phinet_1st_notG if timegroup1995==1995 & phinet_1st_notG>phinet_last_notG ///
@@ -981,7 +982,7 @@ graph twoway (scatter phinet_last_notG phinet_1st_notG if timegroup1995==1995 & 
 	, ytitle("Last Observation (%)") xtitle("First Observation (%)") ylabel(20(20)120, angle(horizontal)) ///
 	xlabel(20(20)125, grid labels)  graphregion(color(white)) legend(off)
 	//title("Evolution of the Household Share of Capital Income, Excluding Public Income 1995-2015")
- quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/UnbalancedNet1995-2015_notG.pdf", replace
+ quietly graph export "figures_apdx/UnbalancedNet1995-2015_notG.pdf", replace
 
 //With G (NET)
 graph twoway (scatter phinet_last_G phinet_1st_G if timegroup1995==1995 & phinet_1st_G>phinet_last_G ///
@@ -994,7 +995,7 @@ graph twoway (scatter phinet_last_G phinet_1st_G if timegroup1995==1995 & phinet
 	, ytitle("Last Observation (%)") xtitle("First Observation (%)") ylabel(20(20)120, angle(horizontal)) ///
 	xlabel(20(20)125, grid labels)  graphregion(color(white)) legend(off)
 	//title("Evolution of the Household Share of Capital Income, Excluding Public Income 1995-2015")
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/UnbalancedNet1995-2015_G.pdf", replace
+quietly graph export "figures/UnbalancedNet1995-2015_G.pdf", replace
 
 //Display results
 local Gornot "notG G"
@@ -1029,7 +1030,7 @@ save `UNDATA' ,replace
 *----------------------------------------------------------------------------*
 
 //Prepare to Handle old currencies in UNDATA	
-import excel "~/Dropbox/Under_the_carpet/Data/legacy-currency.xlsx", ///
+import excel "Data/legacy-currency.xlsx", ///
 	sheet("factors") firstrow clear	
 quietly gen iso2=substr(LegacyOldCurrency,1,2)
 quietly gen xrate=substr(ConversionfromEUR,8,8)	
@@ -1040,14 +1041,14 @@ tempfile xrates_legacy
 save `xrates_legacy',replace
 
 //Prepare lissy's currency-labels
-import excel "~/Dropbox/Under_the_carpet/Data/labels.xlsx" ///
+import excel "Data/labels.xlsx" ///
 	, sheet("Hoja1") firstrow clear
 rename currency currency_lis	
 tempfile curr_labels
 save `curr_labels', replace
 
 //Bring main dataset and define waves
-import excel "~/Dropbox/Under_the_carpet/Data/ccyy2.xlsx", ///
+import excel "Data/ccyy2.xlsx", ///
 	sheet("Hoja1") firstrow clear	
 quietly gen iso2=substr(ccyy,1,2)
 quietly gen year=substr(ccyy,3,2)
@@ -1084,7 +1085,7 @@ graph twoway (scatter K_svy K, mfcolor(none) msize(small)) ///
 	ylabel(0(10)60, labsize(small) angle(horizontal) grid labels) ///
 	ytitle("Survey's Figure (%)") xtitle("National Accounts' Figure (%)") ///
 	legend(off) graphregion(color(white)) scale(1.2)
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KK.pdf", replace 
+	quietly graph export "figures/KK.pdf", replace 
 	
 graph twoway (scatter K_svy K_alt, mfcolor(none) msize(small)) ///
 	(function y=x, range(0 60) lcolor(gs10)) if iso2!="CL" & iso2!="MX" /// 
@@ -1092,7 +1093,7 @@ graph twoway (scatter K_svy K_alt, mfcolor(none) msize(small)) ///
 	ylabel(0(10)60, labsize(small) angle(horizontal) grid labels) ///
 	ytitle("Survey's Figure (%)") xtitle("National Accounts' Figure (%)") ///
 	legend(off) graphregion(color(white)) scale(1.2)	
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KKalt.pdf", replace 
+	quietly graph export "figures/KKalt.pdf", replace 
 	
 //NET	
 graph twoway (scatter K_svy K_n, mfcolor(none) msize(small)) ///
@@ -1101,7 +1102,7 @@ graph twoway (scatter K_svy K_n, mfcolor(none) msize(small)) ///
 	ylabel(0(10)60, labsize(small) angle(horizontal) grid labels) ///
 	ytitle("Survey's Figure (%)") xtitle("National Accounts' Figure (%)") ///
 	legend(off) graphregion(color(white)) scale(1.2)
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KKnet.pdf", replace 	
+	quietly graph export "figures/KKnet.pdf", replace 	
 
 graph twoway (scatter K_svy K_altnet, mfcolor(none) msize(small)) ///
 	(function y=x, range(0 60) lcolor(gs10)) if iso2!="CL" & iso2!="MX" /// 
@@ -1109,13 +1110,13 @@ graph twoway (scatter K_svy K_altnet, mfcolor(none) msize(small)) ///
 	ylabel(0(10)60, labsize(small) angle(horizontal) grid labels) ///
 	ytitle("Survey's Figure (%)") xtitle("National Accounts' Figure (%)") ///
 	legend(off) graphregion(color(white)) scale(1.2)	
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KKaltnet.pdf", replace 
+	quietly graph export "figures/KKaltnet.pdf", replace 
 
 quietly sort iso2 year	
 graph twoway (line K K_alt K_n year), by(iso2)	///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/KperCtry.pdf", replace 
+quietly graph export "figures_apdx/KperCtry.pdf", replace 
 
 levelsof iso2, separate(,)
 codebook iso2
@@ -1270,7 +1271,7 @@ graph twoway (line epsiK wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(0(20)100, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/EpsiByCtry.pdf", replace 
+	quietly graph export "figures_apdx/EpsiByCtry.pdf", replace 
 	
 //NET
 graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
@@ -1282,7 +1283,7 @@ graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(0(20)120, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/EpsiNetByCtry.pdf", replace 
+	quietly graph export "figures_apdx/EpsiNetByCtry.pdf", replace 
 
 graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
 	(line epsiLnet wave_pop_yr, lcolor(maroon)) ///
@@ -1293,7 +1294,7 @@ graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(60(20)180, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/EpsiNetByCtryDK.pdf", replace 	
+	quietly graph export "figures_apdx/EpsiNetByCtryDK.pdf", replace 	
 
 //Historical Series	
 quietly gen histo=.
@@ -1309,7 +1310,7 @@ graph twoway (line epsiK wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(0(20)80, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/EpsiByCtry_histo.pdf", replace   
+	quietly graph export "figures_apdx/EpsiByCtry_histo.pdf", replace   
 	
 //LR Net
 graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
@@ -1321,7 +1322,7 @@ graph twoway (line epsiKnet wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(0(20)100, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/NetEpsiByCtry_histo.pdf", replace   	
+quietly graph export "figures_apdx/NetEpsiByCtry_histo.pdf", replace   	
 
 	
 quietly gen latam=.
@@ -1335,7 +1336,7 @@ graph twoway (line epsiK wave_pop_yr, lcolor(edkblue)) ///
 	ylabel(0(20)80, labsize(small) angle(horizontal) grid labels)  ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/EpsiByCtry_latam.pdf", replace   	
+	quietly graph export "figures_apdx/EpsiByCtry_latam.pdf", replace   	
 
 //Gross/Net definition
 tempvar aux1
@@ -1360,7 +1361,7 @@ graph twoway (line gamma wave_pop_yr) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	ytitle("(%)") xtitle("") legend(label(1 "{&gamma}") label(2 "Gross Capital Share")) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-		quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/KGammaByCtry.pdf", replace 
+		quietly graph export "figures_apdx/KGammaByCtry.pdf", replace 
 		
 graph twoway (line gamma wave_pop_yr) ///
 	(line phi_g_HH wave_pop_yr) ///
@@ -1372,7 +1373,7 @@ graph twoway (line gamma wave_pop_yr) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	ytitle("(%)") xtitle("") legend(label(1 "{&gamma}") label(2 "{&Phi}{subscript:h}")) ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/DecGammaByCtry.pdf", replace 		
+	quietly graph export "figures_apdx/DecGammaByCtry.pdf", replace 		
 	
 graph twoway (line gamma_net wave_pop_yr) ///
 	(line K_net wave_pop_yr) if iso2!="US" & aux_bp==1 & aux_bp2==6  ///
@@ -1382,7 +1383,7 @@ graph twoway (line gamma_net wave_pop_yr) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	ytitle("(%)") xtitle("") ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/NetKGammaByCtry.pdf", replace 
+quietly graph export "figures_apdx/NetKGammaByCtry.pdf", replace 
 restore
 
 //S_K and S_L
@@ -1412,7 +1413,7 @@ graph twoway (line St1_K wave_pop_yr, lcolor(edkblue)) ///
 	graphregion(color(white)) plotregion(lcolor(bluishgray)) scale(1.2) ///
 	ytitle("Top 1%'s Factor Income Share") xtitle("") ///
 	scheme(s1color) subtitle(,fcolor(white) lcolor(bluishgray))
-	quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures_apdx/SqByCtry.pdf", replace 	
+	quietly graph export "figures_apdx/SqByCtry.pdf", replace 	
 restore	
 //Tests of consistency
 /*
@@ -1508,7 +1509,7 @@ foreach cg in `ctrygrp' {
 		}
 		if ("`cg'"=="US") {
 			local min_yr=1975
-			export excel using "~/Dropbox/Under_the_carpet/Tables/Tables.xlsx"	,firstrow(variables) sheet("infoUS") sheetreplace	
+			export excel using "Tables/Tables.xlsx"	,firstrow(variables) sheet("infoUS") sheetreplace	
 		}
 		//GRAPHS
 		//Income concentration
@@ -1522,7 +1523,7 @@ foreach cg in `ctrygrp' {
 			text(15 1997  "Capital", color(edkblue)) ///
 			text(5 1997  "Labor", color(maroon)) ///
 			graphregion(color(white)) scale(1.2) legend(off)
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/St1_`cg'.pdf", replace			
+			quietly graph export "figures/St1_`cg'.pdf", replace			
 			
 		//Income concentration
 		graph twoway (line St10 wave_pop_yr, lcolor(gray) lpattern(dash)) ///
@@ -1535,7 +1536,7 @@ foreach cg in `ctrygrp' {
 			text(48 2013  "Capital", color(edkblue)) ///
 			text(30 2013  "Labor", color(maroon)) ///
 			graphregion(color(white)) scale(1.2) legend(off)
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/St10_`cg'.pdf", replace
+			quietly graph export "figures/St10_`cg'.pdf", replace
 
 		//K and Gamma
 		graph twoway (line K wave_pop_yr, lcolor(edkblue)) ///
@@ -1546,7 +1547,7 @@ foreach cg in `ctrygrp' {
 			text(41 2013  "Capital Share", color(edkblue)) ///
 			text(17 2013  "{&gamma}", color(maroon)) ///
 			graphregion(color(white)) scale(1.2) legend(off)
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/KGamma_`cg'.pdf", replace
+			quietly graph export "figures/KGamma_`cg'.pdf", replace
 			
 		graph twoway (line gamma wave_pop_yr, lcolor(gs10)) ///
 			(line Phi_h wave_pop_yr, lcolor(edkblue)) ///
@@ -1556,7 +1557,7 @@ foreach cg in `ctrygrp' {
 			ylabel(0(10)70, labsize(small) angle(horizontal) grid labels) ///
 			graphregion(color(white)) scale(1.2) ///
 			legend(label(1 "{&gamma}") label(2 "{&Phi}{subscript:h}") label(3 "{&epsilon}{sub:K}/{&epsilon}{sub:L}"))
-			quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/DecGamma_`cg'.pdf", replace
+			quietly graph export "figures/DecGamma_`cg'.pdf", replace
 		
 if ("`cg'"=="BPanel"){
 }
@@ -1574,10 +1575,10 @@ if ("`cg'"=="BPanel"){
 			text(15 2011  "Capital Income ({&epsilon}{sub:K})", color(maroon)) ///
 			text(32 2014  "{&epsilon}{sub:K}/{&epsilon}{sub:L}", color(gs10)) ///
 			graphregion(color(white)) scale(1.2) legend(off)
-		quietly graph export "~/Dropbox/Aplicaciones/Overleaf/Income under the Carpet/figures/Epsilon_`cg'.pdf", replace
+		quietly graph export "figures/Epsilon_`cg'.pdf", replace
 	}	
 }
-exit 1
+
 //Analyze contributions to change --------------------------------------------//
 	local iter=1
 foreach cg in `ctrygrp'{
@@ -1652,13 +1653,13 @@ use `tf_base' , clear
 quietly replace countryorarea="Q_BPanel" if countryorarea=="BPanel"
 sort countryorarea
 quietly collapse (first) `pct_vars', by(countryorarea)
-export excel using "~/Dropbox/Under_the_carpet/Tables/Tables.xlsx"	,firstrow(variables) sheet("Contributions_t1") sheetreplace	
+export excel using "Tables/Tables.xlsx"	,firstrow(variables) sheet("Contributions_t1") sheetreplace	
 
 use `tf_base_d' , clear 
 quietly replace countryorarea="Q_BPanel" if countryorarea=="BPanel"
 sort countryorarea
 quietly collapse (first) `dev_vars', by(countryorarea)
-export excel using "~/Dropbox/Under_the_carpet/Tables/Tables.xlsx"	,firstrow(variables) sheet("Derivatives_t1") sheetreplace	
+export excel using "Tables/Tables.xlsx"	,firstrow(variables) sheet("Derivatives_t1") sheetreplace	
 
 	//Plots
 	//graph twoway (line St10 St10_est wave_pop_yr)
@@ -1675,7 +1676,7 @@ foreach y in `w_years' {
 quietly encode iso2, gen(iso2_id)
 quietly xtset iso2_id wave_yr
 xtline NI_share 
-//graph export "~/Dropbox/Under_the_carpet/Figures/Phi/Phi_structure.pdf", replace
+//graph export "figures_apdx/Phi_structure.pdf", replace
 
 //On average  
 quietly collapse (mean) NI_share, by(iso2)
@@ -1689,149 +1690,3 @@ quietly gsort -NI_share
 quietly gen cumshare=sum(NI_share)
 format %9.1f cumshare
 keep iso2 NI_share cumshare
-
-exit 1
-*----------------------------------------------------------------------------*
-* COMBINE UN-DATA WITH WID.WORLD DATA										 *                                                                                  
-*----------------------------------------------------------------------------*
-
-//Retrieve WID data
-use `UNDATA', clear
-quietly levelsof country, local(countries)
-local variables "sfiinc"
-wid, indicators (`variables') areas (`countries') perc (p99p100) ages(992) population(`pop') clear
-rename value t1
-quietly replace variable = subinstr(variable, "sfiinc992", "",.) 
-
-//Select pertinent series
-egen ctry_var=concat(country variable)
-local series "AUi CAi DKi JPi NOi FRj DEt NLt CHt CZi HRj HUi SIj FIi SEt ITi PTt ESi USj GBi IEt BRj COi CNj RUj UYi"
-gen v_1=0
-foreach x in `series' {
-	quietly replace v_1=1 if strpos(ctry_var, "`x'") 
-}
-drop if v_1==0
-keep country year t1
-quietly merge 1:1 country year using `UNDATA'
-keep if _merge==3
-drop _merge
-label var K "Capital Share (UN Data)"
-label var t1 "Top 1% Share"
-quietly egen timegroup=cut(year), at(1980(`n')2015)
-
-//Keep obs. used in reg
-drop if missing(K, t1) 
-tempfile UN_WID
-save `UN_WID', replace
-
-*----------------------------------------------------------------------------*
-* BETA ESTIMATES (ALSOWITH WALDENSTROM AND BENGTSSON DATA)       	 		 *                                                                                  
-*----------------------------------------------------------------------------*
-
-// IV. Waldenstrom and Begtsson data --------------------------------------//
-
-//Setup
-import excel "~/Dropbox/Under_the_carpet/Data/Waldenstrom_Data.xlsx", sheet("Database") firstrow clear
-quietly rename Top1incomeshare t1_WB
-quietly rename Top10incomeshareinclcapit t10_WB
-quietly rename Netcapitalshare Kn
-quietly rename Grosscapitalshare Kg
-quietly rename Year year 
-label var Kg "Capital %, gross (W&B data)"
-label var Kn "Capital %, net (W&B data)"
-kountry Country, from(other) stuck
-rename _ISO3N_ iso3
-kountry iso3, from(iso3n) to(iso2c)
-rename _ISO2C_ country
-quietly egen timegroup=cut(year), at(1920(`n')2015)
-
-//Save for later and merge
-local K "Kg" 
-local topsh "t1_WB"
-keep `K' `topsh' year Country country timegroup
-drop if missing(`K', `topsh')
-tempfile WB_panel
-save `WB_panel', replace
-merge 1:1 country year using `UN_WID'
-
-//Graph K series all/common/separate obs.
-encode country, gen(ctry)
-xtset ctry year
-quietly replace Kg=Kg/100
-quietly replace t1_WB=t1_WB/100
-xtline K Kg
-graph export "~/Dropbox/Under_the_carpet/Figures/Compare/K_all.pdf", replace
-xtline t1 t1_WB
-graph export "~/Dropbox/Under_the_carpet/Figures/Compare/t1_all.pdf", replace
-xtline K Kg if _merge==3  
-graph export "~/Dropbox/Under_the_carpet/Figures/Compare/K_c.pdf", replace
-keep if (_merge==3 | _merge==2)
-drop if missing(K, t1)
-drop if year<1970
-xtline t1, addplot(line K year, yaxis(2) xlabel(1970(10)2010 2010(5)2015)) ///
-	xlabel(1970(10)2010 2010(5)2015, angle(forty_five))
-graph export "~/Dropbox/Under_the_carpet/Figures/K_t1.pdf", replace
-
-xtline t1, addplot(line phi_g_hh year, yaxis(2) xlabel(1970(10)2010 2010(5)2015)) ///
-	xlabel(1970(10)2010 2010(5)2015, angle(forty_five))
-graph export "~/Dropbox/Under_the_carpet/Figures/Phi_t1.pdf", replace
-
-scatter t1 phi_g_hh || lfit t1 phi_g_hh, by(country) msize(vsmall)
-
-
-//Find Betas
-local databases "`UN_WID' `WB_panel'" 
-local iter "UN_WID"
-foreach data in `databases' {
-	if ("`data'" == "`WB_panel'") {
-		local K "Kg"
-		local topsh "t1_WB"
-	}
-	else if ("`data'" == "`UN_WID'"){
-		local K "K"
-		local topsh "t1"
-	}
-	use `data' ,clear
-	encode country, gen(ctry_id)
-	xtset ctry_id year 
-	quietly levelsof timegroup, local(timegroups)
-	xtreg `topsh' i.timegroup##c.`K',fe
-
-	//Get info from coeffs. and variances 
-	matrix mat_b=e(b)
-	matrix mat_V=e(V)
-	matrix mat_b_`K'=mat_b[1,"`K'"]
-	matrix mat_V_`K'=mat_V["`K'","`K'"]
-	scalar b_`K'=mat_b_`K'[1,1]
-	scalar V_`K'=mat_V_`K'[1,1]
-	foreach t in `timegroups' {
-		matrix mat_b_`t'=mat_b[1,"`t'.timegroup#c.`K'"]
-		matrix mat_V_`t'=mat_V["`t'.timegroup#c.`K'","`t'.timegroup#c.`K'"]
-		matrix mat_COV_`t'=mat_V["`t'.timegroup#c.`K'","`K'"]
-		scalar b_`t'=mat_b_`t'[1,1]
-		scalar B_`t'=b_`K'+b_`t'
-		scalar V_`t'=mat_V_`t'[1,1]
-		scalar COV_`t'=mat_COV_`t'[1,1]
-	}
-
-	//Create matrix 
-	quietly collapse (max) year, by(timegroup)
-	drop if missing(timegroup)
-	quietly gen Beta=.
-	quietly gen CI_lo=.
-	quietly gen CI_hi=.
-	foreach t in `timegroups'{
-		quietly replace Beta=B_`t' if timegroup==`t'
-		quietly replace CI_lo=Beta-1.96*sqrt(V_`t'+V_`K'+2*COV_`t') if timegroup==`t'
-		quietly replace CI_hi=Beta+1.96*sqrt(V_`t'+V_`K'+2*COV_`t') if timegroup==`t'
-	}
-	quietly gen mark_year=timegroup+`n'/2	
-
-	graph twoway (connected Beta mark_year, lcolor(red)) (line CI_lo mark_year, lcolor(black) lpattern(dot)) ///
-			(line CI_hi mark_year, lcolor(black) lpattern(dot)) ///
-			, yline(0, lcolor(black)) title("Marginal effect of the Capital Share") ytitle("Beta") xtitle("Year") ///
-			xlabel(1920(10)2010 2010(5)2015, labsize(small) angle(forty_five)) ///
-			graphregion(color(white)) legend(off)
-	graph export "~/Dropbox/Under_the_carpet/Figures/Beta/`iter'.pdf" ,replace	
-	local iter "WB_panel"
-}
