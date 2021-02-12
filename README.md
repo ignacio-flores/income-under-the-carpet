@@ -25,6 +25,7 @@ please report to i.floresbeale@gmail.com
 ****************************************************************************************
 
 -About national accounts data 
+
   You can find the most up-to-date data in the following link: 
   http://data.un.org/Explorer.aspx I scrapped it with some R code, which I will not share
   because I am not the author. However, you can find all the tables that I used in the 
@@ -34,6 +35,7 @@ please report to i.floresbeale@gmail.com
   SnF -> Non-Financial Corps. 
 
 -About LIS data 
+
   All survey data that I use in this study comes from the Luxembourg Income Studies (LIS) 
   database, for which direct access to microdata is forbidden due to confidentiality 
   agreements between LIS and national statistical offices. To work with it, you have to 
