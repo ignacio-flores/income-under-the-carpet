@@ -15,7 +15,7 @@ In what follows, some details about specific aspects of the project.
 
 (*) The whole thing should take 20-40mins to run. It could certainly be written in a 
 more efficient way, but it works, which is the most important. It was one of my first 
-projects to write as a PhD student, so please be forgiving when judging. 
+projects as a PhD student, so please be forgiving when judging. 
 
 (**) The 02a do-file requires the genstack command in stata to be installed. If you 
 havent done it, please type the STATA command: ssc install genstack 
