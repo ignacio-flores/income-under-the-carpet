@@ -19,6 +19,9 @@ projects to write as a PhD student, so please be forgiving when judging.
 
 (**) The 02a do-file requires the genstack command in stata to be installed. If you 
 havent done it, please type the STATA command: ssc install genstack 
+
+(***) If you find any bugs or if you want a version of the full manuscript
+please report to i.floresbeale@gmail.com
 ****************************************************************************************
 
 -About national accounts data 
