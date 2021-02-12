@@ -30,7 +30,7 @@ havent done it, please type the STATA command: ssc install genstack
   NPISH -> Non-Profits Serving Households; SF-> Financial Corps; 
   SnF -> Non-Financial Corps. 
 
--about LIS data 
+-About LIS data 
   All survey data that I use in this study comes from the Luxembourg Income Studies (LIS) 
   database, for which direct access to microdata is forbidden due to confidentiality 
   agreements between LIS and national statistical offices. To work with it, you have to 
