@@ -45,5 +45,6 @@ havent done it, please type the STATA command: ssc install genstack
 (***) If you find any bugs or if you want a version of the full manuscript
 please report to i.floresbeale@gmail.com
   
+Ignacio Flores (www.ignacioflores.com) 
 
 
