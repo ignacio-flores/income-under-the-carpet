@@ -11,7 +11,7 @@ macro drop _all
 clear all
 
 //general settings  
-global mydirectory ~/Dropbox/ForGitHub/Under_the_carpet/
+global mydirectory ~/GitHub/Under_the_carpet/
 qui cd "${mydirectory}code/"
 
 //list codes 
