@@ -1,9 +1,12 @@
 # income-under-the-carpet
 
-Here you will find all the necessary STATA code and data to reproduce results from: 
+[What is this?]
 
+Here you will find all the necessary STATA code and data to reproduce results from: 
 "THE CAPITAL SHARE AND INCOME INEQUALITY: INCREASING GAPS BETWEEN MICRO AND MACRO-DATA"
 by Ignacio Flores, published in the Journal of Economic Inequality
+
+[Instructions] 
 
 Download the whole project and run the "run_everything.do" file, which will run -you 
 guessed it- everything. But, before doing it, first think about replacing the global 
@@ -11,6 +14,8 @@ in line 14 'mydirectory' to wherever you put the folder. Pretty simple, right? A
 it will produce the file 'tables/data-behind-figures.xlsx' which has tables with
 the data used to build figures in the paper. Please don't forget to cite the paper 
 if using data and/or code.
+
+[Further details]
 
 In what follows, some details about specific aspects of the project.
 
@@ -23,7 +28,6 @@ havent done it, please type the STATA command: ssc install genstack
 
 (***) If you find any bugs or if you want a version of the full manuscript
 please report to i.floresbeale@gmail.com
-****************************************************************************************
 
 -About national accounts data 
 
