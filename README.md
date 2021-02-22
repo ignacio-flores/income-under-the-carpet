@@ -7,11 +7,11 @@ by Ignacio Flores, published in the Journal of Economic Inequality
 
 ### [Instructions] 
 Download the whole project and run the "run_everything.do" file, which will run -you 
-guessed it- everything. But, before doing it, first think about replacing the 
-'mydirectory'global in line 14 to wherever you put the folder. Pretty simple, right? 
-Also, it will produce the file 'tables/data-behind-figures.xlsx' which has tables with
-the data used to build figures in the paper. Please don't forget to cite the paper 
-if using data and/or code.
+guessed it- everything. But, before doing it, remember to replace the 'mydirectory'
+global in line 14 to wherever you put the folder. Pretty simple, right? Also, it 
+will produce the file 'tables/data-behind-figures.xlsx' which has tables with the 
+data used to build figures in the paper. Please don't forget to cite the paper if 
+using data and/or code.
 
 ### [National accounts data]
 You can find the most up-to-date data in the following link: 
