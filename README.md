@@ -1,7 +1,6 @@
 # income-under-the-carpet
 
-Here you will find all the necessary STATA code and data to reproduce results from 
-(please cite the corresponding paper if using data and/or code): 
+Here you will find all the necessary STATA code and data to reproduce results from: 
 
 "THE CAPITAL SHARE AND INCOME INEQUALITY: INCREASING GAPS BETWEEN MICRO AND MACRO-DATA"
 by Ignacio Flores, published in the Journal of Economic Inequality
@@ -10,7 +9,8 @@ Download the whole project and run the "run_everything.do" file, which will run 
 guessed it- everything. But, before doing it, first think about replacing the global 
 in line 14 'mydirectory' to wherever you put the folder. Pretty simple, right? Also,
 it will produce the file 'tables/data-behind-figures.xlsx' which has tables with
-the data used to build figures in the paper. 
+the data used to build figures in the paper. Please don't forget to cite the paper 
+if using data and/or code.
 
 In what follows, some details about specific aspects of the project.
 
