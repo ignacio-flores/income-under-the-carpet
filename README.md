@@ -6,7 +6,7 @@ Here you will find all the necessary STATA code and data to reproduce results fr
 by Ignacio Flores, published in the Journal of Economic Inequality
 
 ### [Instructions] 
-Download the whole project and run the [`run_everything.do`](code/run_everything.do) file, which will run -you 
+Download the whole project and run the [`0_run_everything.do`](code/0_run_everything.do) file, which will run -you 
 guessed it- everything. But, before doing it, remember to replace the 'mydirectory'
 global in line 14 to wherever you put the folder. Pretty simple, right? Also, it 
 will produce the file 'tables/data-behind-figures.xlsx' which has tables with the 
