@@ -1,10 +1,10 @@
 ///////////////////////////////////////////////////////////////////////////////
-//																			 //
-//																			 //
-//  			   THE CAPITAL SHARE AND INCOME INEQUALITY 	 				 //
-//			            	Ignacio Flores (2021)							 //
-//				    Goal: Runs every dofile in the project					 //
-//																		     //
+//									     //
+//									     //   
+//  			   THE CAPITAL SHARE AND INCOME INEQUALITY 	     //
+//			            	Ignacio Flores (2021)		     //
+//		             Goal: Runs every dofile in the project	     //
+//									     //
 ///////////////////////////////////////////////////////////////////////////////
 
 macro drop _all 
