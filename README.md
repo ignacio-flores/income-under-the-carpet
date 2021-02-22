@@ -1,6 +1,7 @@
 # income-under-the-carpet
 
-Here you will find all the necessary STATA code and data to reproduce results from: 
+Here you will find all the necessary STATA code and data to reproduce results from 
+(please cite the corresponding paper if using data and/or code): 
 
 "THE CAPITAL SHARE AND INCOME INEQUALITY: INCREASING GAPS BETWEEN MICRO AND MACRO-DATA"
 by Ignacio Flores, published in the Journal of Economic Inequality
