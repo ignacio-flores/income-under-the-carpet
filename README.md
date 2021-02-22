@@ -6,7 +6,7 @@ Here you will find all the necessary STATA code and data to reproduce results fr
 by Ignacio Flores, published in the Journal of Economic Inequality
 
 ### [Instructions] 
-Download the whole project and run the [`run_everything.do`](run_everything.do) file, which will run -you 
+Download the whole project and run the [`run_everything.do`](code/run_everything.do) file, which will run -you 
 guessed it- everything. But, before doing it, remember to replace the 'mydirectory'
 global in line 14 to wherever you put the folder. Pretty simple, right? Also, it 
 will produce the file 'tables/data-behind-figures.xlsx' which has tables with the 
@@ -26,9 +26,9 @@ direct access to microdata is forbidden due to confidentiality agreements betwee
 and national statistical offices. To work with it, you have to send them code via an 
 interface. The STATA version is limited to retrieve information only from the log. 
 The rationale is thus to orginse the information in the log as something that makes 
-sense as a .csv file, to then be able to copypaste it and use the data ([`ccyy.csv`](ccyy.csv) 
-and [`ccyy2.csv`](ccyy2.csv) in the `Data/` folder). The do-file I used to retrieve the main survey data 
-is [`0a_Lissy2019.do`](a_Lissy2019.do), while [`0b_Lissy_currencies.do`](0b_Lissy_currencies.do) was used to get information on 
+sense as a .csv file, to then be able to copypaste it and use the data ([`ccyy.csv`](Data/ccyy.csv) 
+and [`ccyy2.csv`](Data/ccyy2.csv) in the `Data/` folder). The do-file I used to retrieve the main survey data 
+is [`0a_Lissy2019.do`](code/0a_Lissy2019.do), while [`0b_Lissy_currencies.do`](code/0b_Lissy_currencies.do) was used to get information on 
 currencies. These do files are part of the project, but do not run with the 
 run_everything.do. 
   
