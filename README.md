@@ -33,14 +33,15 @@ currencies. These do files are part of the project, but do not run with the
 run_everything.do. 
   
  ### [Further details]
-(*) The whole thing should take 20-40mins to run. It could certainly be written in a 
+- The whole thing should take 20-40mins to run. It could certainly be written in a 
 more efficient way, but it works, which is the most important. It was one of my first 
 projects as a PhD student, so please be forgiving when judging. 
-
-(**) The 02a do-file requires the genstack command in stata to be installed. If you 
-havent done it, please type the STATA command: ssc install genstack 
-
-(***) If you find any bugs or if you want a version of the full manuscript
+- The 02a do-file requires the genstack command in stata to be installed. If you 
+havent done it, please type the STATA command:
+```
+ssc install genstack 
+```
+- If you find any bugs or if you want a version of the full manuscript
 please report to i.floresbeale@gmail.com
   
 Author: Ignacio Flores (www.ignacioflores.com)
