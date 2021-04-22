@@ -26,7 +26,7 @@ All survey data comes from the Luxembourg Income Studies (LIS) database, for whi
 direct access to microdata is forbidden due to confidentiality agreements between 
 LIS and national statistical offices. To work with it, you have to send them code 
 via an interface. The STATA version is limited to retrieve information only from 
-the log. The rationale is thus to orginse the information in the log as something 
+the log. The rationale is thus to organise the information in the log as something 
 that makes sense as a .csv file, to then be able to copypaste it and use the data 
 ([`ccyy.csv`](Data/ccyy.csv) and [`ccyy2.csv`](Data/ccyy2.csv) in the `Data/` folder). 
 The do-file I used to retrieve the main survey data is [`0a_Lissy2019.do`](code/0a_Lissy2019.do), 
